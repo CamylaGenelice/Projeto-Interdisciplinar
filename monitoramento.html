@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspectra - Sistema de Monitoramento</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #1E88E5;
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .dashboard .section {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            color: #1E88E5;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .section table th, .section table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .section table th {
+            background: #f4f4f4;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #D32F2F;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #1E88E5;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Monitoramento - Inspectra</h1>
+    </header>
+
+    <div class="dashboard">
+        <!-- Dados Coletados -->
+        <div class="section">
+            <h2>Dados Coletados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID do Produto</th>
+                        <th>Hora da Inspeção</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>14:30</td>
+                        <td class="approved">Aprovado</td>
+                    </tr>
+                    <tr>
+                        <td>002</td>
+                        <td>14:35</td>
+                        <td class="rejected">Reprovado</td>
+                    </tr>
+                    <tr>
+                        <td>003</td>
+                        <td>14:40</td>
+                        <td class="approved">Aprovado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Classificações de Defeitos -->
+        <div class="section">
+            <h2>Classificações de Defeitos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Defeito</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rachaduras</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Manchas</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Dimensão Irregular</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Gráfico de Resultados -->
+        <div class="section chart-container">
+            <h2>Resumo de Inspeções</h2>
+            <canvas id="inspectionChart"></canvas>
+        </div>
+    </div>
+
+    <footer>
+        <p>Inspectra © 2025 - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('inspectionChart').getContext('2d');
+        const inspectionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Aprovados', 'Reprovados'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [2, 1],
+                    backgroundColor: ['#2E7D32', '#D32F2F'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    title: {
+                        display: true,
+                        text: 'Resultados das Inspeções'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
