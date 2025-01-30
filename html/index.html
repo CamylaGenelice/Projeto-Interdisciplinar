@@ -137,8 +137,8 @@
             const formData = new FormData(event.target);
 
             const data = Object.fromEntries(formData.entries());
-            const endpoint = isCadastro ? '/api/register' : '/api/login';
-            const url = `http://localhost:13000${endpoint}`;
+            const endpoint = isCadastro ? '/route/index' : '/route/index';
+            const url = `http://localhost:18000${endpoint}`;
 
             try {
                 const response = await fetch(url, {
