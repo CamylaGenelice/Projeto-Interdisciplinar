@@ -1,6 +1,7 @@
+// modelo de documentos
 const mongoose = require("mongoose")
 
-// Verificação
+// Verificação, 
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
