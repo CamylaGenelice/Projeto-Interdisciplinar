@@ -1,8 +1,9 @@
-const mongoose = require("mongoose")
-const useServices = require("../services/services")
-const { rawListeners } = require("../models/User-model")
+import mongoose from "mongoose"
+import useServices from "../services/services.js"
 
-const validID = (req,res,next) => {
+
+
+export const validID = (req,res,next) => {
     try {
         const id = req.params.id
         // verificando se o id é valido
@@ -15,7 +16,7 @@ const validID = (req,res,next) => {
     }
 }
 
-const validUser = async (req,res,next) =>{
+export const validUser = async (req,res,next) =>{
     try {
         const id = req.params.id
         const user = await useServices.findByIdService(id)
@@ -35,6 +36,6 @@ const validUser = async (req,res,next) =>{
     
 }
 
-module.exports = {
+export default{
     validID, validUser
 }

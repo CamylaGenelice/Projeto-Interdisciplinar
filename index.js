@@ -1,7 +1,10 @@
-const express = require("express")
-const userRoute = require("./src/route/route") // modulo de rotas
+import express from "express"
+import userRoute from "./src/route/route.js"
+import connectDataBase from "./src/databse/banco.js"
+
+
 const app = express()
-const connectDataBase = require("./src/databse/banco")
+
 
 const port = 18000
 

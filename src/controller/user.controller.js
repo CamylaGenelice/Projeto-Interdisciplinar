@@ -1,4 +1,5 @@
-const useServices = require("../services/services")
+import useServices from "../services/services.js"
+
 /*const mongoose = require("mongoose") */
 
 
@@ -90,6 +91,6 @@ const update = async (req,res) => {
     
 }
 
-module.exports = {
+export default {
     create,findAll, findById, update,
 }
