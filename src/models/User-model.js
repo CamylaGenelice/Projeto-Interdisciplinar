@@ -1,6 +1,6 @@
 // modelo de documentos
 import mongoose from "mongoose"
-
+import bcrypt from 'bcrypt'
 
 // Verificação, 
 const UserSchema = new mongoose.Schema({
@@ -21,8 +21,15 @@ const UserSchema = new mongoose.Schema({
     senha: {
         type: String,
         required: true,
+        select: false
     }
+})
+// Função que cryptografa a senha 
+UserSchema.pre("save", async function (next) {
+    this.senha = await bcrypt.hash(this.senha, 10)
+    next()
 })
 
 const User = mongoose.model("User",UserSchema)
- export default User
+
+export default User

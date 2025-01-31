@@ -1,7 +1,8 @@
 import express from "express"
 import userRoute from "./src/route/route.js"
 import connectDataBase from "./src/databse/banco.js"
-
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express()
 
