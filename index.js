@@ -7,7 +7,7 @@ dotenv.config()
 const app = express()
 
 
-const port = 18000
+const port = process.env.PORT || 18000
 
 connectDataBase()
 app.use(express.json())
