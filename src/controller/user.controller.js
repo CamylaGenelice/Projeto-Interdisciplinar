@@ -33,7 +33,7 @@ const create =  async (req, res) =>{
 
     } 
     catch (error) {
-        res.status(500).send({msg:error.message})
+       return res.status(500).send({msg:error.message})
     }
 
     
@@ -50,7 +50,7 @@ const findAll = async (req, res) => {
         res.send(users)
 }
      catch (error) {
-        res.status(500).send({msg:error.message})
+        return res.status(500).send({msg:error.message})
     }
 
 }    
@@ -62,7 +62,7 @@ const findById = async (req, res) =>{
         res.send(user)
     } 
     catch (error) {
-        res.status(500).send({msg:error.message})
+       return res.status(500).send({msg:error.message})
     }
     
 }
@@ -85,7 +85,7 @@ const update = async (req,res) => {
         return res.send({msg: "Usuario foi atualizado com sucesso! "})
         } 
     catch (error) {
-        res.status(500).send({msg:error.message})
+       return res.status(500).send({msg:error.message})
     }
     
     

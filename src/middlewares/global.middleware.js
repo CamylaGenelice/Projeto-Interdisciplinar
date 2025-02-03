@@ -10,9 +10,9 @@ export const validID = (req,res,next) => {
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).send({msg:"Id invalido!"})
         }
-        next()
+        return next()
     } catch (error) {
-        res.status(500).send({msg:error.message})
+        return res.status(500).send({msg:error.message})
     }
 }
 
@@ -28,9 +28,9 @@ export const validUser = async (req,res,next) =>{
         req.id = id
         req.user = user
 
-        next()
+        return next()
     } catch (error) {
-        res.status(500).send({msg:error.message})
+        return res.status(500).send({msg:error.message})
     }
 
     
