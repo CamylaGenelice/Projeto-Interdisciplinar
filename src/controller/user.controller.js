@@ -2,7 +2,7 @@ import useServices from "../services/services.js"
 
 /*const mongoose = require("mongoose") */
 
-
+// Cadastro de usuarios
 const create =  async (req, res) =>{
 
     try {
@@ -45,7 +45,7 @@ const findAll = async (req, res) => {
         const users = await useServices.findAllServices()
 
         if(users.length === 0){
-            return res.status(400).send({messagen: "Não ha usuários castrados"})
+            return res.status(400).send({messagen: "Não ha usuários cadastrados"})
         }
         res.send(users)
 }
