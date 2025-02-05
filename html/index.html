@@ -67,7 +67,7 @@
                         <label for="senha" class="form-label">Senha</label>
                         <input type="senha" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    <button type="submit" onclick="visibilidadeSenha()" class="btn btn-primary w-100">Entrar</button>
                 </form>
             </div>
             <!-- Right Side Info Section -->
@@ -80,6 +80,14 @@
     </div>
 
     <script>
+
+        function visibilidadeSenha(){
+            const senhaInput = document.getElementById("senha"
+            )
+            const type = senhaInput.getAttribute("type") === "password" ? "text" : "password"
+            senhaInput.setAttribute("type",type)
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('loginForm').addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -99,7 +107,7 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    alert("Bem-vindo ao Inspectra!");
+                    
                     window.location.href = "monitoramento.html"; // Redireciona para login após cadastro
                 } else {
                     alert(result.error || 'Erro! Senha ou Usuario incorretos');
