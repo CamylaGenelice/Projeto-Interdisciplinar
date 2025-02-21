@@ -2,9 +2,9 @@ import express from "express"
 import sensorController from "../controller/sensorController.js"
 
 
-const route = express.Router()
+const routeData = express.Router()
 
-route.post("/sensorData", sensorController.postSensorData())
-route.get("/sensorData", sensorController.getSensorData())
+routeData.post("/sensorData", sensorController.postSensorData)
+routeData.get("/sensorData", sensorController.getSensorData)
 
-export default route
+export default routeData
