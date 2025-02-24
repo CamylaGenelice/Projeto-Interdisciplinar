@@ -3,8 +3,10 @@ import productInfoController from "../controller/productInfoController.js"
 
 const route = express.Router()
 
-route.post("/product-info",productInfoController.postProductInfo)
+route.post("/postproduct",productInfoController.postProductInfo)
 
 route.get("/product/:productId",productInfoController.getProductInfo)
+
+route.get("product-info", productInfoController.getAllProducts)
 
 export default route

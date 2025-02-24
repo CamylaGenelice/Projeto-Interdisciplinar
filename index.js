@@ -3,7 +3,7 @@
 import express from "express"
 import connectDataBase from "./src/databse/banco.js"
 import sensorDataRoute from"./src/route/sensorData.js"
-import productInfoRoute from "./src/route/productInfo.js"
+import productInfoRoute from "./src/route/productInfoRoute.js"
 import uploadImageRoute from "./src/route/uploadImage.js"
 
 
@@ -31,9 +31,9 @@ app.use(express.json())
 app.use("/user",userRoute)
 app.use("/autenticacao",autRoute)
 
-app.use('api-sensor', sensorDataRoute)
+app.use('/api-sensor', sensorDataRoute)
 app.use('/api-info',productInfoRoute)
 app.use('/api-image',uploadImageRoute)
 
 
-app.listen(port, () => console.log('servidor rodando'))
+app.listen(port, () => console.log('Servidor Rodando'))

@@ -11,6 +11,16 @@ class ProductInfoService {
                 throw new Error("Dados incompletos ou inválidos.");
             }
 
+            // Determina o status com base nos dados dos sensores
+            let status = 'intacto'; // Status padrão
+            if (weight < 1 || weight > 10) { // Exemplo de regra para defeito
+                status = 'defeito';
+            }
+            if (movement === true) { // Exemplo de regra para defeito
+                status = 'defeito';
+            }
+
+
             // Cria um novo registro
             const newProductInfo = new ProductInfo({
                 product_id,
@@ -37,5 +47,14 @@ class ProductInfoService {
             throw error;
         }
     }
-}
+
+    // Busca todos os produtos
+    static async getAllProducts() {
+        try {
+            const products = await ProductInfo.find();
+            return products;
+        } catch (error) {
+            throw error;
+        }
+}}
 export default ProductInfoService

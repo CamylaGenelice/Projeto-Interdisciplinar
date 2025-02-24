@@ -40,6 +40,17 @@ class ProductInfoController {
            return res.status(500).json({ error: error.message || "Erro interno do servidor." });
         }
     }
+
+    static async getAllProducts(){
+        try {
+            const products = await ProductInfoService.getAllProducts()
+
+            res.status(200).json(products)
+        } 
+        catch (error) {
+            res.status(500).json({error: error.message})
+        }
+    }
 }
 
 export default ProductInfoController

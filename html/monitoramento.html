@@ -11,7 +11,7 @@
   
 </head>
 
-<body>
+<body>  
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Inspectra</a>
@@ -31,12 +31,13 @@
         </div>
     </nav>
 
+    <!-- Inicio do container-->
     <div class="container mt-4">
         <!-- Dados Coletados -->
         <div class="card mb-4" id="historico">
             <div class="card-header bg-primary text-white">Dados Coletados</div>
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped" id="productTable">
                     <thead>
                         <tr>
                             <th>ID do Produto</th>
@@ -45,62 +46,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>14:30</td>
-                            <td class="text-success">Aprovado</td>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>14:35</td>
-                            <td class="text-danger">Reprovado</td>
-                        </tr>
-                        <tr>
-                            <td>003</td>
-                            <td>14:40</td>
-                            <td class="text-success">Aprovado</td>
-                        </tr>
+                        <!-- As linhas serão preenchidas dinamicamente -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Classificações de Defeitos -->
-        <div class="card mb-4">
-            <div class="card-header bg-warning text-dark">Classificações de Defeitos</div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Defeito</th>
-                            <th>Quantidade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Rachaduras</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Manchas</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Dimensão Irregular</td>
-                            <td>2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Gráfico de Resultados -->
+        <!-- Grafico dos resultados -->
         <div class="card mb-4">
             <div class="card-header bg-info text-white">Resumo de Inspeções</div>
             <div class="card-body text-center">
                 <canvas id="inspectionChart"></canvas>
             </div>
         </div>
+    
+
+
 
         <!-- Envio de Dados -->
         <div class="card mb-4" id="envio">
@@ -119,38 +80,92 @@
             <p  class="mb-0">Inspectra © 2025 - Todos os direitos reservados</p>
         
     </div>
-
+    <!-- Fim do container-->
    
 
     
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
     <script>
-        const ctx = document.getElementById('inspectionChart').getContext('2d');
-        const inspectionChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Aprovados', 'Reprovados'],
-                datasets: [{
-                    label: 'Quantidade',
-                    data: [2, 1],
-                    backgroundColor: ['#2E7D32', '#D32F2F'],
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    },
-                    title: {
-                        display: true,
-                        text: 'Resultados das Inspeções'
+        // Função para buscar os dados da API
+        async function fetchProductData() {
+            try {
+                const response = await fetch('/api-info'); // Rota da API
+                const products = await response.json();
+
+                // Atualiza a tabela
+                const tableBody = document.querySelector('#productTable tbody');
+                tableBody.innerHTML = ''; // Limpa a tabela
+
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${product.product_id}</td>
+                        <td>${new Date(product.timestamp).toLocaleTimeString()}</td>
+                        <td class="${product.status === 'intacto' ? 'text-success' : 'text-danger'}">
+                            ${product.status === 'intacto' ? 'Aprovado' : 'Reprovado'}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Atualiza o gráfico
+                updateChart(products);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        }
+
+        // Função para atualizar o gráfico
+        function updateChart(products) {
+            const approvedCount = products.filter(p => p.status === 'intacto').length;
+            const rejectedCount = products.filter(p => p.status === 'defeito').length;
+
+            const ctx = document.getElementById('inspectionChart').getContext('2d');
+            const inspectionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Aprovados', 'Reprovados'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [approvedCount, rejectedCount],
+                        backgroundColor: ['#2E7D32', '#D32F2F'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        title: {
+                            display: true,
+                            text: 'Resultados das Inspeções'
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
+        // Busca os dados quando a página carrega
+        document.addEventListener('DOMContentLoaded', fetchProductData);
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
